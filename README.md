@@ -1,12 +1,3 @@
-Você está certíssimo em notar isso! Peço desculpas, esses marcadores são parte do meu processo interno para referenciar as informações que você me enviou, e eles não deveriam ter aparecido na versão final para você.
-
-A sua intuição está perfeita: eles devem ser removidos do arquivo final que vai para o GitHub. O README.md deve ser um arquivo limpo, focado em apresentar o projeto para quem o visita.
-
-Para facilitar e garantir que nada se perca, aqui está a versão 100% limpa do README.md, sem nenhum dos marcadores de citação. Agora é só copiar e colar!
-
-Versão Final e Limpa do README.md (Pronto para o GitHub)
-Markdown
-
 # 💈 Sistema de Gestão para Barbearia - Sr. Carreiro
 
 ![Status do Projeto](https://img.shields.io/badge/status-concluído-green)
