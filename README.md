@@ -1,3 +1,12 @@
+Você está certíssimo em notar isso! Peço desculpas, esses marcadores são parte do meu processo interno para referenciar as informações que você me enviou, e eles não deveriam ter aparecido na versão final para você.
+
+A sua intuição está perfeita: eles devem ser removidos do arquivo final que vai para o GitHub. O README.md deve ser um arquivo limpo, focado em apresentar o projeto para quem o visita.
+
+Para facilitar e garantir que nada se perca, aqui está a versão 100% limpa do README.md, sem nenhum dos marcadores de citação. Agora é só copiar e colar!
+
+Versão Final e Limpa do README.md (Pronto para o GitHub)
+Markdown
+
 # 💈 Sistema de Gestão para Barbearia - Sr. Carreiro
 
 ![Status do Projeto](https://img.shields.io/badge/status-concluído-green)
@@ -18,28 +27,28 @@ O sistema é dividido em três portais, cada um com uma experiência de usuário
 
 ### 👤 Portal do Cliente
 Uma interface limpa e direta, focada em facilitar o agendamento para o cliente final.
-* [cite_start]**Autenticação Completa:** Cadastro e login com E-mail/Senha, além de login social com Google para maior conveniência [cite: 1696-1710, 4113-4165].
-* [cite_start]**Fluxo de Agendamento Intuitivo:** Um processo guiado em 4 etapas (Escolha do Serviço -> Profissional -> Dia e Horário -> Confirmação) garante uma experiência de usuário sem atritos [cite: 1429-1573, 3144-3402].
-* [cite_start]**Histórico de Agendamentos:** O cliente tem acesso a um histórico de todos os seus agendamentos passados e futuros, com status visual de comparecimento [cite: 1574-1613, 3770-3859].
-* **Experiência de Aplicativo (PWA):** O site é um Progressive Web App, permitindo que o cliente o "instale" na tela inicial do celular. [cite_start]Ele funciona como um app nativo e possui capacidade de acesso offline aos recursos essenciais [cite: 4983-5003, 5005-5043].
+* **Autenticação Completa:** Cadastro e login com E-mail/Senha, além de login social com Google para maior conveniência.
+* **Fluxo de Agendamento Intuitivo:** Um processo guiado em 4 etapas (Escolha do Serviço -> Profissional -> Dia e Horário -> Confirmação) garante uma experiência de usuário sem atritos.
+* **Histórico de Agendamentos:** O cliente tem acesso a um histórico de todos os seus agendamentos passados e futuros, com status visual de comparecimento.
+* **Experiência de Aplicativo (PWA):** O site é um Progressive Web App, permitindo que o cliente o "instale" na tela inicial do celular. Ele funciona como um app nativo e possui capacidade de acesso offline aos recursos essenciais.
 
 ### ✂️ Portal do Funcionário
 Um painel de controle focado na produtividade e autonomia do profissional.
-* [cite_start]**Acesso Restrito:** Login seguro que direciona o funcionário para um painel com suas ferramentas de trabalho diárias [cite: 4085-4112].
-* [cite_start]**Agenda do Dia:** Visualização clara e objetiva de todos os seus agendamentos para o dia corrente, com a capacidade de marcar o status do cliente (compareceu ou não) [cite: 1176-1220, 2815-2917].
-* [cite_start]**Gestão de Disponibilidade:** O próprio funcionário pode configurar seus dias e horários de trabalho, bloqueando ou liberando horários em sua agenda pessoal para os próximos 30 dias [cite: 1347-1427, 4228-4392].
-* [cite_start]**Módulo de Caixa (PDV):** Permite registrar os serviços realizados e produtos vendidos em cada atendimento, calculando totais e finalizando a venda diretamente pelo seu painel [cite: 1221-1346, 3403-3457].
+* **Acesso Restrito:** Login seguro que direciona o funcionário para um painel com suas ferramentas de trabalho diárias.
+* **Agenda do Dia:** Visualização clara e objetiva de todos os seus agendamentos para o dia corrente, com a capacidade de marcar o status do cliente (compareceu ou não).
+* **Gestão de Disponibilidade:** O próprio funcionário pode configurar seus dias e horários de trabalho, bloqueando ou liberando horários em sua agenda pessoal para os próximos 30 dias.
+* **Módulo de Caixa (PDV):** Permite registrar os serviços realizados e produtos vendidos em cada atendimento, calculando totais e finalizando a venda diretamente pelo seu painel.
 
 ### 🚀 Portal do Administrador
 O centro de comando do negócio, com acesso a todas as funcionalidades de gestão.
-* [cite_start]**Dashboard Gerencial Completo:** Um painel com indicadores de performance (KPIs) essenciais em tempo real, como receita, despesas, lucro líquido e ticket médio [cite: 344-470, 2713-2814].
+* **Dashboard Gerencial Completo:** Um painel com indicadores de performance (KPIs) essenciais em tempo real, como receita, despesas, lucro líquido e ticket médio.
 * **Gestão Total (CRUD):** Controle total sobre as entidades do sistema:
-    * [cite_start]**Clientes:** Cadastro, busca, edição e visualização de todos os clientes da barbearia [cite: 213-343, 3492-3608].
-    * [cite_start]**Funcionários:** Gerenciamento da equipe, com definição de nível de acesso (Admin/Funcionário) [cite: 471-595, 3622-3769].
-    * [cite_start]**Serviços:** Criação e edição do catálogo de serviços, definindo preço, duração e custos associados [cite: 1051-1174, 4595-4743].
-    * [cite_start]**Produtos e Estoque:** Controle de inventário com movimentações de entrada (compra) e saída (venda, consumo, perda), além do cálculo de Custo Médio Ponderado (CMP) [cite: 841-1050, 4393-4594].
-* [cite_start]**Visão Financeira Detalhada:** Tela de **Lançamentos** com um registro completo de todas as transações, incluindo filtros avançados por data, profissional, cliente e forma de pagamento [cite: 596-840, 3917-4046].
-* [cite_start]**Controle de Agenda Global:** O admin pode visualizar e configurar a agenda de todos os funcionários a partir de um único painel [cite: 20-105, 2918-3143].
+    * **Clientes:** Cadastro, busca, edição e visualização de todos os clientes da barbearia.
+    * **Funcionários:** Gerenciamento da equipe, com definição de nível de acesso (Admin/Funcionário).
+    * **Serviços:** Criação e edição do catálogo de serviços, definindo preço, duração e custos associados.
+    * **Produtos e Estoque:** Controle de inventário com movimentações de entrada (compra) e saída (venda, consumo, perda), além do cálculo de Custo Médio Ponderado (CMP).
+* **Visão Financeira Detalhada:** Tela de **Lançamentos** com um registro completo de todas as transações, incluindo filtros avançados por data, profissional, cliente e forma de pagamento.
+* **Controle de Agenda Global:** O admin pode visualizar e configurar a agenda de todos os funcionários a partir de um único painel.
 
 ---
 
@@ -59,7 +68,7 @@ O centro de comando do negócio, com acesso a todas as funcionalidades de gestã
 
 ## 📂 Estrutura do Projeto
 
-[cite_start]O código é organizado de forma modular para facilitar a manutenção e escalabilidade, separando as responsabilidades de cada parte da aplicação. [cite: 5080-5136]
+O código é organizado de forma modular para facilitar a manutenção e escalabilidade, separando as responsabilidades de cada parte da aplicação.
 
 ```
 /
