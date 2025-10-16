@@ -1,0 +1,56 @@
+barbearia-carreiro(pasta raiz)
+|--------manifest.json
+|--------sw.js
+|--------firebase.js
+
+	assets
+	|--------funcionarios
+	|--------icones-logo
+		|--------sr.carreiro(4).png
+	|--------produtos
+
+	css
+	|--------admin.css
+	|--------styles.css
+
+	html
+	|--------admin
+		|--------agenda.html
+		|--------caixa.html
+		|--------clientes.html
+		|--------dashboard.html
+		|--------funcionarios.html
+		|--------lancamentos.html
+		|--------produtos.html
+		|--------servicos.html
+	|--------funcionarios
+		|--------agenda.html
+		|--------caixa.html
+		|--------perfil.html
+
+	|--------agendar-confirmar.html
+	|--------agendar-servicos.html
+	|--------agendar-horario.html
+	|--------agendar-profissional.html
+	|--------agendar-servico.html
+	|--------historico.html
+	|--------home.html
+	|--------index.html
+
+	js
+	|--------admin-nav.js
+	|--------perfil-funcionario.js
+	|--------caixa-funcionario.js
+	|--------admin.js
+	|--------agenda.js
+	|--------agendamento.js
+	|--------caixa.js
+	|--------clientes.js
+	|--------firebase-config.js
+	|--------funcionarios.js
+	|--------historico.js
+	|--------home.js
+	|--------lancamentos.js
+	|--------login.js
+	|--------produtos.js
+	|--------service.js

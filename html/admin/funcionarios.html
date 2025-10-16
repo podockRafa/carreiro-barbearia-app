@@ -1,0 +1,143 @@
+<!-- FUNCIONARIOS -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin • Agenda — Barbearia Carreiro</title>
+
+  <link rel="stylesheet" href="../../css/admin.css?v=6" />
+
+  <link rel="manifest" href="/manifest.json">
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <script defer src="../../js/firebase-config.js"></script>
+
+  <script defer src="../../js/layout-loader.js"></script> 
+  <script defer src="../../js/funcionarios.js"></script>      
+</head>
+<body class="admin-body">
+  <div class="admin-shell">
+    <!-- SIDEBAR -->
+    <div id="sidebar-placeholder"></div>
+
+    <!-- MAIN -->
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <h1>Funcionários</h1>
+      </header>
+
+      <!-- ===== Tabela + ações globais ===== -->
+      <section class="panel">
+        <div class="svc-utils">
+          <div class="search">
+            <label for="empQ" style="margin:0">Busca:</label>
+            <input id="empQ" type="text" placeholder="Nome, função, telefone, contrato, acesso…" />
+          </div>
+          <div class="svc-util-btns">
+            <button id="empExport" class="btn btn-blue">Exportar JSON</button>
+            <label class="btn btn-ghost">Importar JSON
+              <input id="empImportFile" type="file" accept="application/json" hidden />
+            </label>
+            <button id="empZerar" class="btn btn-red">Zerar tudo</button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table id="empTable" class="table">
+            <thead>
+              <tr>
+                <th>Foto</th>
+                <th>Nome</th>
+                <th>Função</th>
+                <th>Telefone</th>
+                <th class="hide-sm">Endereço</th>
+                <th>Contrato</th>
+                <th>Comissão</th>
+                <th class="hide-sm">Salário fixo</th>
+                <th>Acesso</th>
+                <th>ID</th>
+                <th>Senha</th>
+                <th style="width:96px">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="empTbody"><!-- linhas via JS --></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- FAB: adicionar novo funcionário -->
+      <button id="btnFabAddEmp" class="fab" title="Novo funcionário" aria-label="Novo funcionário">+</button>
+
+      <!-- ===== Modal: Novo/Editar Funcionário ===== -->
+      <div id="empModal" class="modal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="empModalTitle">
+          <button class="modal-close" data-close>&times;</button>
+          <h3 id="empModalTitle">Novo funcionário</h3>
+
+          <!-- Observação de segurança (demo) -->
+          <p class="muted" style="margin-top:-6px">
+            * DEMO: senha padrão é salva em texto apenas para testes. Em produção, use Auth/Hash.
+          </p>
+
+          <form id="empForm">
+  <input type="hidden" id="fId" />
+
+  <div class="svc-row">
+    <div>
+      <label for="fName">Nome *</label>
+      <input id="fName" type="text" required />
+    </div>
+    <div>
+      <label for="fRole">Função *</label>
+      <select id="fRole" required>
+        <option value="">Selecione…</option>
+        <option>Barbeiro</option>
+        <option>Recepção</option>
+        <option>Gerente</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="svc-row">
+    <div>
+      <label for="fPhone">Telefone</label>
+      <input id="fPhone" type="text" placeholder="(21) 99999-9999" />
+    </div>
+  </div>
+  
+  <div class="svc-row">
+    <div>
+        <label for="fLoginId">E-mail de Login *</label>
+        <input id="fLoginId" type="email" placeholder="email.login@barbearia.com" required />
+    </div>
+  </div>
+
+  <div class="svc-actions">
+    <button type="submit" class="btn btn-green">Salvar</button>
+    <button type="button" class="btn btn-ghost" data-close>Cancelar</button>
+  </div>
+</form>
+        </div>
+      </div>
+
+      <!-- ===== Modal: Confirmar exclusão ===== -->
+      <div id="empModalDelete" class="modal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="empModalDelTitle">
+          <button class="modal-close" data-close>&times;</button>
+          <h3 id="empModalDelTitle">Excluir funcionário</h3>
+          <p>Tem certeza que deseja excluir <strong id="empDelNome">este funcionário</strong>?</p>
+          <div class="svc-actions">
+            <button id="btnEmpConfirmDelete" class="btn btn-red">Excluir</button>
+            <button class="btn btn-ghost" data-close>Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

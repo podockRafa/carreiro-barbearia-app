@@ -1,0 +1,275 @@
+<!-- LANCAMENTOS -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin • Lançamentos — Barbearia Carreiro</title>
+
+    <link rel="stylesheet" href="../../css/admin.css?v=7" />
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <script defer src="../../js/firebase-config.js"></script>
+
+    <script defer src="../../js/layout-loader.js"></script>
+    <script defer src="../../js/lancamentos.js"></script>
+</head>
+
+<body class="admin-body">
+  <div class="admin-shell">
+    <!-- SIDEBAR -->
+    <div id="sidebar-placeholder"></div>
+
+    <!-- MAIN -->
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <h1>Lançamentos</h1>
+      </header>
+
+      <!-- ================= FILTROS ================= -->
+      <section class="panel" aria-labelledby="h-filtros">
+        <h2 id="h-filtros" class="panel-title" style="margin-bottom:8px">Filtros</h2>
+
+        <div class="svc-utils" style="row-gap:8px">
+          <!-- Intervalo rápido -->
+          <div class="btn-group" role="group" aria-label="Intervalo">
+            <button class="btn btn-ghost" data-range="dia">Dia</button>
+            <button class="btn btn-ghost" data-range="semana">Semana</button>
+            <button class="btn btn-ghost" data-range="mes">Mês</button>
+            <button class="btn btn-ghost" data-range="ano">Ano</button>
+            <button class="btn btn-blue"  data-range="custom">Personalizado</button>
+          </div>
+
+          <!-- Datas -->
+          <div class="svc-row">
+            <div>
+              <label for="fDataDe">De</label>
+              <input type="date" id="fDataDe" />
+            </div>
+            <div>
+              <label for="fDataAte">Até</label>
+              <input type="date" id="fDataAte" />
+            </div>
+          </div>
+
+          <!-- Seletor de profissional/cliente -->
+          <div class="svc-row">
+            <div>
+              <label for="fProf">Profissional</label>
+              <select id="fProf"></select>
+            </div>
+            <div>
+              <label for="fCli">Cliente</label>
+              <select id="fCli"></select>
+            </div>
+          </div>
+
+          <!-- Forma de pagamento / Tipo / Ordenação -->
+          <div class="svc-row">
+            <div>
+              <label for="fForma">Forma de pagamento</label>
+              <select id="fForma">
+                <option value="">Todos</option>
+                <option>Dinheiro</option>
+                <option>Pix</option>
+                <option>Debito</option>
+                <option>CreditoAVista</option>
+                <option>CreditoParcelado</option>
+              </select>
+            </div>
+            <div>
+              <label for="fTipo">Tipo</label>
+              <select id="fTipo">
+                <option value="">Todos</option>
+                <option value="servico">Serviço</option>
+                <option value="combo_uso">Combo (uso)</option>
+                <option value="produto">Produto</option>
+              </select>
+            </div>
+            <div>
+              <label for="fOrd">Ordenação</label>
+              <select id="fOrd">
+                <option value="desc">Mais recente → Mais antigo</option>
+                <option value="asc">Mais antigo → Mais recente</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="svc-util-btns">
+            <button id="btnAplicar" class="btn btn-green">Aplicar</button>
+            <button id="btnLimpar"  class="btn btn-ghost">Limpar</button>
+
+            <span class="spacer"></span>
+
+            <button id="lanExport" class="btn btn-blue">Exportar JSON</button>
+            <label class="btn btn-ghost">Importar JSON
+              <input id="lanImport" type="file" accept="application/json" hidden />
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= KPIs ================= -->
+      <section class="panel">
+        <div class="kpi-grid">
+          <div class="kpi"><div class="kpi-label">Receita bruta</div><div class="kpi-value" id="kpiReceitaBruta">R$ 0,00</div></div>
+          <div class="kpi"><div class="kpi-label">Taxas</div><div class="kpi-value" id="kpiTaxas">R$ 0,00</div></div>
+          <div class="kpi"><div class="kpi-label">Comissões</div><div class="kpi-value" id="kpiComissoes">R$ 0,00</div></div>
+          <div class="kpi"><div class="kpi-label">Custos</div><div class="kpi-value" id="kpiCustos">R$ 0,00</div></div>
+          <div class="kpi"><div class="kpi-label">Resultado líquido</div><div class="kpi-value" id="kpiResultado">R$ 0,00</div></div>
+        </div>
+      </section>
+
+      <!-- ================= TABELA ================= -->
+      <section class="panel">
+        <div class="table-wrap">
+          <table class="table" id="lanTable">
+            <thead>
+              <tr>
+                <th>Data/Hora</th>
+                <th>Profissional</th>
+                <th>Cliente</th>
+                <th>Serviço</th>
+                <th>Produtos</th>
+                <th>Forma pag.</th>
+                <th>Preço bruto</th>
+                <th>Taxa</th>
+                <th>Comissão</th>
+                <th>Custos</th>
+                <th>Resultado</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="lanTbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- FAB (Novo lançamento) -->
+      <button id="btnFabAddLan" class="fab" title="Novo lançamento" aria-label="Novo lançamento">+</button>
+
+      <!-- ================= MODAL: Novo/Editar ================= -->
+      <div id="lanModal" class="modal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="lanTitle">
+          <button class="modal-close" data-close>&times;</button>
+          <h3 id="lanTitle">Novo lançamento</h3>
+
+          <!-- [FORM: NOVO LANCAMENTO] -->
+          <form id="lanForm">
+            <!-- Profissional / Cliente -->
+            <div class="svc-row">
+              <div>
+                <label for="lProf">Profissional *</label>
+                <select id="lProf" required></select>
+              </div>
+              <div>
+                <label for="lCli">Cliente *</label>
+                <select id="lCli" required></select>
+              </div>
+            </div>
+
+            <!-- Serviço ou Combo -->
+            <div class="svc-row">
+              <div>
+                <label for="lTipoSrv">Tipo</label>
+                <select id="lTipoSrv">
+                  <option value="servico">Serviço</option>
+                  <option value="combo_uso">Combo (uso)</option>
+                </select>
+              </div>
+              <div id="srvSelectBox">
+                <label for="lSrv">Serviço</label>
+                <select id="lSrv"></select>
+              </div>
+              <div id="comboSelectBox" hidden>
+                <label for="lCombo">Combo do cliente</label>
+                <select id="lCombo"></select>
+              </div>
+            </div>
+
+            <!-- Preço/Desconto (só serviço) -->
+            <div id="srvPrecoBox">
+              <div class="svc-row">
+                <div>
+                  <label for="lPreco">Preço praticado (R$)</label>
+                  <input id="lPreco" type="number" step="0.01" min="0" />
+                </div>
+                <div>
+                  <label for="lDescTipo">Desconto</label>
+                  <select id="lDescTipo">
+                    <option value="">—</option>
+                    <option value="valor">Valor (R$)</option>
+                    <option value="percentual">% (%)</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="lDescVal">Valor desc.</label>
+                  <input id="lDescVal" type="number" step="0.01" min="0" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Produtos -->
+            <div class="hint" style="margin-top:8px">Produtos (opcional):</div>
+            <div id="lanProdList"></div>
+            <button id="btnAddProd" class="btn btn-ghost" type="button">+ Adicionar produto</button>
+
+            <!-- Pagamento -->
+            <div class="svc-row" style="margin-top:8px">
+              <div>
+                <label for="lForma">Forma de pagamento</label>
+                <select id="lForma">
+                  <option>Dinheiro</option>
+                  <option>Pix</option>
+                  <option>Debito</option>
+                  <option>CreditoAVista</option>
+                  <option>CreditoParcelado</option>
+                </select>
+              </div>
+              <div>
+                <label for="lParcelas">Parcelas (se cartão)</label>
+                <input id="lParcelas" type="number" min="1" value="1" />
+              </div>
+            </div>
+
+            <label for="lObs" class="svc-label-up" style="margin-top:6px">Observação</label>
+            <textarea id="lObs" rows="3" placeholder="Opcional"></textarea>
+
+            <!-- KPIs ao vivo -->
+            <div class="svc-kpis" style="margin-top:10px">
+              <div class="svc-kpi"><div class="lb">Receita</div><div class="vl" id="kpiLiveReceita">R$ 0,00</div></div>
+              <div class="svc-kpi"><div class="lb">Taxa</div><div class="vl" id="kpiLiveTaxa">R$ 0,00</div></div>
+              <div class="svc-kpi"><div class="lb">Comissão</div><div class="vl" id="kpiLiveComissao">R$ 0,00</div></div>
+              <div class="svc-kpi"><div class="lb">Custos</div><div class="vl" id="kpiLiveCustos">R$ 0,00</div></div>
+              <div class="svc-kpi"><div class="lb">Resultado</div><div class="vl" id="kpiLiveResultado">R$ 0,00</div></div>
+            </div>
+
+            <div class="svc-actions">
+              <button type="submit" class="btn btn-green">Salvar</button>
+              <button type="button" class="btn btn-ghost" data-close>Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- MODAL: Confirmação de exclusão -->
+      <div id="lanDelModal" class="modal" aria-hidden="true">
+        <div class="modal-card">
+          <button class="modal-close" data-close>&times;</button>
+          <h3>Excluir lançamento</h3>
+          <p>Recomendado: estornar ao invés de excluir. Deseja excluir mesmo assim?</p>
+          <div class="svc-actions">
+            <button id="lanConfirmDel" class="btn btn-red">Excluir</button>
+            <button class="btn btn-ghost" data-close>Cancelar</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</body>
+</html>

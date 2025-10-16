@@ -1,0 +1,145 @@
+<!-- DASHBOARD -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin • Painel — Barbearia Carreiro</title>
+
+    <link rel="stylesheet" href="../../css/admin.css?v=3" />
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <script defer src="../../js/firebase-config.js"></script>
+
+    <script defer src="../../js/layout-loader.js"></script>
+    <script defer src="../../js/admin.js"></script>
+</head>
+
+<body class="admin-body">
+  <div class="admin-shell">
+    <!-- SIDEBAR -->
+    <div id="sidebar-placeholder"></div>
+
+    <!-- MAIN -->
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <h1>Bem-vindo, <span id="adminName">Admin</span> 👋</h1>
+      </header>
+
+      <!-- DASHBOARD (apenas esta view nesta página) -->
+      <section class="view show" id="view-dashboard" aria-labelledby="h-dashboard">
+        <h2 id="h-dashboard" class="view-title">📊 Dashboard – Contabilidade Completa</h2>
+
+        <!-- KPIs -->
+        <div class="kpi-grid">
+          <div class="kpi">
+            <div class="kpi-label">Receita (mês/ano)</div>
+            <div class="kpi-value" id="kpiReceita">R$ 0,00</div>
+            <div class="kpi-sub">Serviços + Produtos</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Despesas (mês/ano)</div>
+            <div class="kpi-value" id="kpiDespesas">R$ 0,00</div>
+            <div class="kpi-sub">Fixas + Variáveis + Taxas</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Lucro líquido</div>
+            <div class="kpi-value" id="kpiLucro">R$ 0,00</div>
+            <div class="kpi-sub">Receita – Despesas</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Ticket médio</div>
+            <div class="kpi-value" id="kpiTicket">R$ 0,00</div>
+            <div class="kpi-sub">Receita ÷ Atendimentos</div>
+          </div>
+        </div>
+
+        <!-- 3 colunas: gráficos / listas -->
+        <div class="panel-grid">
+          <div class="panel">
+            <div class="panel-title">Formas de pagamento</div>
+            <div class="chart-placeholder" id="chartPagamentos" aria-label="Gráfico de pizza"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Top serviços</div>
+            <ul class="rank-list" id="rankServicos"></ul>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Top produtos</div>
+            <ul class="rank-list" id="rankProdutos"></ul>
+          </div>
+        </div>
+
+        <div class="panel-grid">
+          <div class="panel">
+            <div class="panel-title">Entradas recentes</div>
+            <div class="table-wrap">
+              <table class="table" id="tabEntradas">
+                <thead>
+                  <tr><th>Data</th><th>Tipo</th><th>Descrição</th><th>Qtd</th><th>Forma</th><th>Taxa</th><th>Líquido</th></tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Saídas recentes</div>
+            <div class="table-wrap">
+              <table class="table" id="tabSaidas">
+                <thead>
+                  <tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Valor</th><th>Forma</th><th>Situação</th></tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Contas a pagar</div>
+            <div class="table-wrap">
+              <table class="table" id="tabPagar">
+                <thead>
+                  <tr><th>Vencimento</th><th>Descrição</th><th>Categoria</th><th>Valor</th><th>Status</th></tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">Indicadores</div>
+          <div class="indicators">
+            <div><strong>Lucro bruto</strong>: <span id="indBruto">R$ 0,00</span></div>
+            <div><strong>Lucro líquido</strong>: <span id="indLiquido">R$ 0,00</span></div>
+            <div><strong>Margem de lucro</strong>: <span id="indMargem">0%</span></div>
+            <div><strong>Saldo de caixa hoje</strong>: <span id="indSaldo">R$ 0,00</span></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">Relatórios</div>
+          <div class="reports-grid">
+            <div class="chart-placeholder" id="chartReceitaServicos" aria-label="Gráfico de barras"></div>
+            <div class="chart-placeholder" id="chartEvolucao" aria-label="Linha do tempo"></div>
+            <div class="table-wrap">
+              <table class="table" id="tabRankProdutos">
+                <thead><tr><th>Produto</th><th>Qtd</th><th>Receita</th></tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- /DASHBOARD -->
+    </main>
+  </div>
+</body>
+</html>

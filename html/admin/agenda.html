@@ -1,0 +1,105 @@
+<!-- AGENDA -->
+ 
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin • Agenda — Barbearia Carreiro</title>
+
+  <link rel="stylesheet" href="../../css/admin.css?v=6" />
+
+  <link rel="manifest" href="/manifest.json">
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <script defer src="../../js/firebase-config.js"></script>
+
+  <script defer src="../../js/layout-loader.js"></script> 
+  <script defer src="../../js/agenda.js"></script>      
+</head>
+<body class="admin-body">
+  <div class="admin-shell">
+    <!-- SIDEBAR -->
+    <div id="sidebar-placeholder"></div>
+
+    <!-- MAIN -->
+    <main class="admin-main">
+      <h2 class="view-title" style="font-size:32px; color:#e0b25b; text-transform:lowercase">agenda</h2>
+
+      <!-- TOPO / FILTROS RÁPIDOS -->
+      <section class="panel agenda-top">
+        <div class="agenda-left">
+          <button id="btnPrev" class="btn btn-ghost">◀ anterior</button>
+          <button id="btnHoje" class="btn btn-blue">hoje</button>
+          <button id="btnNext" class="btn btn-ghost">próximo ▶</button>
+        </div>
+
+        <div class="agenda-mid">
+          <label>Data</label>
+          <input id="agendaData" type="date" />
+        </div>
+
+        <div class="agenda-right">
+          <label>Profissional</label>
+          <select id="filtroProf"><option value="*">Todos</option></select>
+        </div>
+      </section>
+
+      <!-- GRID DE COLUNAS POR FUNCIONÁRIO -->
+      <section id="agendaGrid" class="agenda-grid">
+        <!-- preenchido via JS -->
+      </section>
+
+      <!-- BOTÃO FLUTUANTE “+” (novo agendamento futuro) -->
+      <button id="btnNovoAg" class="fab" title="Novo agendamento">+</button>
+    </main>
+  </div>
+
+  <!-- MODAL: CONFIGURAR AGENDA DO FUNCIONÁRIO -->
+  <div id="modalConfig" class="modal hidden" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="configTitle">Configurar agenda</h3>
+        <button class="modal-close" id="closeConfig">✕</button>
+      </div>
+
+      <!-- Ajuda -->
+      <p class="muted" style="margin:6px 0 10px">
+        Clique nos horários para <strong>liberar</strong> (verde) ou <strong>bloquear</strong> (cinza).
+        Intervalo fixo de 30min — de <strong>10:00</strong> até <strong>20:00</strong>, <em>segunda a domingo</em>.
+      </p>
+
+      <div id="dayMonth" class="day-month"></div>
+      <div id="dayStrip" class="day-strip"></div>
+      <div id="weekMatrix" class="week-matrix"></div>
+
+      <!-- Barra de dias (30 dias) -->
+      <div id="dayStrip" class="day-strip" role="tablist" aria-label="Selecionar dia específico"></div>
+
+      <!-- Semana x Horas -->
+      <div id="weekMatrix" class="week-matrix">
+        <!-- JS monta a tabela: colunas = seg–dom, linhas = 10:00…20:00 -->
+      </div>
+
+      <div class="modal-actions">
+        <button id="saveConfig" class="btn btn-green">Salvar</button>
+        <button id="cancelConfig" class="btn btn-ghost">Cancelar</button>
+      </div>
+    </div>
+  </div>
+  <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').then(registration => {
+        console.log('ServiceWorker registrado com sucesso: ', registration.scope);
+      }).catch(error => {
+        console.log('Falha no registro do ServiceWorker: ', error);
+      });
+    });
+  }
+</script>
+</body>
+</html>

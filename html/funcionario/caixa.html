@@ -1,0 +1,159 @@
+<!-- caixa do funcionario -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <!-- Define o tipo de documento HTML5 -->
+  <meta charset="UTF-8" />
+  <!-- Define que o site será responsivo e se ajustará à tela do dispositivo -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Título exibido na aba do navegador -->
+  <title>Funcionário | Caixa - Barbearia Carreiro</title>
+
+  <!-- Importa o arquivo CSS principal da área administrativa -->
+  <link rel="stylesheet" href="../../css/admin.css?v=7" />
+</head>
+
+<body class="admin-body">
+  <!-- Corpo principal da página administrativa -->
+  <div class="admin-shell">
+
+    <!-- MENU LATERAL (Sidebar) -->
+    <aside class="admin-sidebar">
+
+      <!-- Área da marca / logotipo -->
+      <div class="admin-brand">
+        <img src="../../assets/icones-logo/sr.carreiro (4).png" alt="SR. CARREIRO">
+      </div>
+
+      <!-- Exibe o nome do funcionário logado (carregado dinamicamente via JS) -->
+      <div id="employeeName" class="employee-badge">Carregando...</div>
+
+      <!-- Navegação lateral (links principais do painel do funcionário) -->
+      <nav class="admin-nav">
+        <a class="nav-item" href="./agenda.html"><span class="dot"></span>Agenda</a>
+        <a class="nav-item" href="./caixa.html"><span class="dot"></span>Caixa</a>
+        <a class="nav-item" href="./perfil.html"><span class="dot"></span>Minha Disponibilidade</a>
+      </nav>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="admin-main">
+
+      <!-- Cabeçalho da seção principal -->
+      <header class="admin-topbar">
+        <h1>Caixa / Registrar Atendimento</h1>
+      </header>
+
+      <!-- CONTAINER GERAL DO CAIXA -->
+      <div class="caixa-container">
+
+        <!-- SEÇÃO DE INFORMAÇÕES INICIAIS -->
+        <section class="panel caixa-topo">
+          <div>
+            <!-- Campo de seleção de cliente -->
+            <label for="caixaCliente">Cliente*</label>
+            <select id="caixaCliente" required>
+              <option value="">Selecione...</option>
+            </select>
+          </div>
+
+          <div>
+            <!-- Campo de seleção de profissional (inicialmente desabilitado até carregar via JS) -->
+            <label for="caixaProfissional">Profissional*</label>
+            <select id="caixaProfissional" required disabled>
+              <option value="">Carregando...</option>
+            </select>
+          </div>
+
+          <div>
+            <!-- Campo para selecionar data e hora do atendimento -->
+            <label for="caixaData">Data/Hora</label>
+            <input id="caixaData" type="datetime-local" />
+          </div>
+        </section>
+
+        <!-- SEÇÃO DE SERVIÇOS REALIZADOS -->
+        <section class="caixa-section">
+          <h3>Serviços Realizados</h3>
+
+          <!-- Lista onde os serviços adicionados serão exibidos dinamicamente -->
+          <div id="servicosLista"></div>
+
+          <!-- Botão para adicionar novo serviço -->
+          <button id="addServico" class="btn btn-ghost btn-add" style="margin-top: 10px;">+ Adicionar Serviço</button>
+        </section>
+
+        <!-- SEÇÃO DE PRODUTOS CONSUMIDOS/VENDIDOS -->
+        <section class="caixa-section">
+          <h3>Produtos Consumidos/Vendidos</h3>
+
+          <!-- Lista de produtos adicionados -->
+          <div id="produtosLista"></div>
+
+          <!-- Botão para adicionar novo produto -->
+          <button id="addProduto" class="btn btn-ghost btn-add" style="margin-top: 10px;">+ Adicionar Produto</button>
+        </section>
+
+        <!-- SEÇÃO DE RESUMO E PAGAMENTO -->
+        <section class="caixa-section">
+          <h3>Resumo e Pagamento</h3>
+
+          <div class="resumo-grid">
+            <!-- Totais atualizados dinamicamente pelo JS -->
+            <p>Total Serviços: <strong id="resumoServicos">R$ 0,00</strong></p>
+            <p>Total Produtos: <strong id="resumoProdutos">R$ 0,00</strong></p>
+            <p>Subtotal: <strong id="resumoSubtotal">R$ 0,00</strong></p>
+
+            <!-- Seleção da forma de pagamento -->
+            <div>
+              <label for="formaPagamento" style="display: block; margin-bottom: 5px;">Forma de Pagamento</label>
+              <select id="formaPagamento" style="width: 100%;">
+                <option>Dinheiro</option>
+                <option>Pix</option>
+                <option>Debito</option>
+                <option>CreditoAVista</option>
+                <option>CreditoParcelado</option>
+              </select>
+            </div>
+
+            <!-- Exibe taxa e total final (calculados automaticamente) -->
+            <p>Taxa: <strong id="resumoTaxa">R$ 0,00</strong></p>
+            <p class="resumo-total">TOTAL A PAGAR: <strong id="resumoTotalFinal">R$ 0,00</strong></p>
+          </div>
+        </section>
+
+        <!-- SEÇÃO DE BOTÕES DE AÇÃO -->
+        <section class="caixa-acoes">
+          <!-- Botão para cancelar o atendimento atual -->
+          <button id="btnCancelar" class="btn btn-red">Cancelar</button>
+
+          <!-- Botão para finalizar e registrar a venda no sistema -->
+          <button id="btnFinalizar" class="btn btn-green">Finalizar Venda</button>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- =============================== -->
+  <!-- IMPORTAÇÃO DE SCRIPTS (FIREBASE E LÓGICA DO CAIXA) -->
+  <!-- =============================== -->
+
+  <!-- Importa bibliotecas do Firebase (versão 8.10.1) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <!-- Arquivo com as configurações de conexão ao Firebase -->
+  <script defer src="../../js/firebase-config.js"></script>
+
+  <!-- Lógica principal de cálculo e controle do caixa -->
+  <script defer src="../../js/shared/caixa-logic.js"></script>
+
+  <!-- Script com as funções específicas para o funcionário (ex: carregar nome, restrições, etc.) -->
+  <script defer src="../../js/caixa-funcionario.js"></script>
+
+</body>
+</html>

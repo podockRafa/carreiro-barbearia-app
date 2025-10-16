@@ -1,0 +1,46 @@
+<!-- AGENDA -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Funcionário | Agenda - Barbearia Carreiro</title>
+    <link rel="stylesheet" href="../../css/admin.css?v=7" />
+    <style>
+        .agenda-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin-bottom: 10px; display: grid; grid-template-columns: 1fr auto; gap: 15px; align-items: center; }
+        .agenda-details h4 { margin: 0 0 5px; color: var(--primary); }
+        .agenda-details p { margin: 0; color: #ccc; }
+        .agenda-actions { display: flex; gap: 10px; }
+    </style>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script defer src="../../js/firebase-config.js"></script>
+    <script defer src="../../js/agenda-funcionario.js"></script>
+</head>
+<body class="admin-body">
+    <div class="admin-shell">
+        <aside class="admin-sidebar">
+            <div class="admin-brand"><img src="../../assets/icones-logo/sr.carreiro (4).png" alt="SR. CARREIRO"></div>
+            <div id="employeeName" class="employee-badge">Carregando...</div>
+            <nav class="admin-nav">
+                <a class="nav-item" href="./agenda.html"><span class="dot"></span>Agenda</a>
+                <a class="nav-item" href="./caixa.html"><span class="dot"></span>Caixa</a>
+                <a class="nav-item" href="./perfil.html"><span class="dot"></span>Minha Disponibilidade</a>
+            </nav>
+        </aside>
+        <main class="admin-main">
+            <header class="admin-topbar">
+                <h1 id="header-title">Sua Agenda de Hoje</h1>
+            </header>
+            <section class="panel">
+                <div id="lista-agenda">
+                    <p>Carregando agenda...</p>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

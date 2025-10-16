@@ -1,0 +1,238 @@
+<!-- PRODUTOS -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin • Produtos (Estoque) — Barbearia Carreiro</title>
+
+    <link rel="stylesheet" href="../../css/admin.css?v=4" />
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <script defer src="../../js/firebase-config.js"></script>
+
+    <script defer src="../../js/layout-loader.js"></script>
+    <script defer src="../../js/produtos.js"></script>
+</head>
+<body class="admin-body">
+  <div class="admin-shell">
+    <!-- SIDEBAR -->
+    <div id="sidebar-placeholder"></div>
+
+    <!-- MAIN -->
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <h1>Produtos (Estoque)</h1>
+      </header>
+
+      <!-- Barra de ações -->
+      <section class="panel">
+        <div class="svc-utils">
+          <div class="search">
+            <label for="prdQ" style="margin:0">Busca:</label>
+            <input id="prdQ" type="text" placeholder="Nome, SKU, categoria, fornecedor…" />
+          </div>
+          <div class="svc-util-btns">
+            <button id="prdExport" class="btn btn-blue">Exportar JSON</button>
+            <label class="btn btn-ghost">Importar JSON
+              <input id="prdImportFile" type="file" accept="application/json" hidden />
+            </label>
+            <button id="prdZerar" class="btn btn-red">Zerar tudo</button>
+          </div>
+        </div>
+
+        <!-- Tabela -->
+        <div class="table-wrap">
+          <table id="prdTable" class="table">
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>SKU</th>
+                <th>Categoria</th>
+                <th>Un.</th>
+                <th>Estoque</th>
+                <th>Mín.</th>
+                <th>Preço venda</th>
+                <th>Custo (CMP)</th>
+                <th>Lucro</th>
+                <th>Status</th>
+                <th class="hide-sm">Fornecedor</th>
+                <th style="width:132px">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="prdTbody"><!-- via JS --></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- FAB: adicionar produto -->
+      <button id="btnFabAddPrd" class="fab" title="Novo produto" aria-label="Novo produto">+</button>
+
+      <!-- ===== Modal: Novo/Editar Produto ===== -->
+      <div id="prdModal" class="modal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="prdModalTitle">
+          <button class="modal-close" data-close>&times;</button>
+          <h3 id="prdModalTitle">Novo produto</h3>
+
+          <form id="prdForm">
+            <input type="hidden" id="pId" />
+
+            <div class="svc-row">
+              <div>
+                <label for="pNome">Nome *</label>
+                <input id="pNome" type="text" required />
+              </div>
+              <div>
+                <label for="pSKU">SKU/ID *</label>
+                <input id="pSKU" type="text" required />
+              </div>
+            </div>
+
+            <div class="svc-row">
+              <div>
+                <label for="pCategoria">Categoria</label>
+                <input id="pCategoria" type="text" placeholder="Pomadas, Shampoos…" />
+              </div>
+              <div>
+                <label for="pUn">Unidade *</label>
+                <input id="pUn" type="text" placeholder="un, ml, g…" required />
+              </div>
+            </div>
+
+            <div class="svc-row">
+              <div>
+                <label for="pPreco">Preço venda (R$) *</label>
+                <input id="pPreco" type="number" min="0" step="0.01" required />
+              </div>
+              <div>
+                <label for="pFornecedor">Fornecedor principal</label>
+                <input id="pFornecedor" type="text" />
+              </div>
+            </div>
+
+            <div class="svc-row">
+              <div>
+                <label for="pEstMin">Estoque mínimo *</label>
+                <input id="pEstMin" type="number" min="0" step="1" required />
+              </div>
+              <div>
+                <label>Política de custo</label>
+                <input type="text" id="pPolitica" value="CMP (padrão)" readonly />
+              </div>
+            </div>
+
+            <label for="pObs" class="svc-label-up">Observação</label>
+            <textarea id="pObs" placeholder="Notas internas, validade por lote será lançada nas movimentações."></textarea>
+
+            <div class="svc-actions">
+              <button type="submit" class="btn btn-green">Salvar</button>
+              <button type="button" class="btn btn-ghost" data-close>Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ===== Modal: Movimentar Estoque ===== -->
+      <div id="movModal" class="modal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="movTitle">
+          <button class="modal-close" data-close>&times;</button>
+          <h3 id="movTitle">Movimentar estoque</h3>
+          <p class="muted" style="margin-top:-6px">* Custo médio ponderado (CMP) é recalculado após cada ENTRADA.</p>
+
+          <form id="movForm">
+            <input type="hidden" id="mProductId" />
+
+            <div class="svc-row">
+              <div>
+                <label for="mTipo">Tipo</label>
+                <select id="mTipo">
+                  <option value="entrada">Entrada (Compra)</option>
+                  <option value="saida">Saída (Venda/Brinde/Consumo/Perda)</option>
+                  <option value="ajuste">Ajuste</option>
+                </select>
+              </div>
+              <div>
+                <label for="mQtd">Quantidade *</label>
+                <input id="mQtd" type="number" step="1" />
+              </div>
+            </div>
+
+            <!-- Campos específicos -->
+            <div id="boxEntrada">
+              <div class="svc-row">
+                <div>
+                  <label for="mCusto">Custo unitário (R$) *</label>
+                  <input id="mCusto" type="number" step="0.01" min="0" />
+                </div>
+                <div>
+                  <label for="mFornecedor">Fornecedor</label>
+                  <input id="mFornecedor" type="text" />
+                </div>
+              </div>
+              <div class="svc-row">
+                <div>
+                  <label for="mLote">Lote (opcional)</label>
+                  <input id="mLote" type="text" />
+                </div>
+                <div>
+                  <label for="mValidade">Validade (opcional)</label>
+                  <input id="mValidade" type="date" />
+                </div>
+              </div>
+            </div>
+
+            <div id="boxSaida" hidden>
+              <div class="svc-row">
+                <div>
+                  <label for="mMotivo">Motivo</label>
+                  <select id="mMotivo">
+                    <option value="venda">Venda</option>
+                    <option value="brinde">Brinde</option>
+                    <option value="consumo">Consumo interno</option>
+                    <option value="perda">Perda/Quebra</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="mPreco">Preço aplicado (informativo)</label>
+                  <input id="mPreco" type="number" step="0.01" min="0" />
+                </div>
+              </div>
+            </div>
+
+            <div id="boxAjuste" hidden>
+              <label for="mJust">Justificativa</label>
+              <input id="mJust" type="text" placeholder="Inventário, erro, etc." />
+            </div>
+
+            <label for="mObs" class="svc-label-up">Observação</label>
+            <textarea id="mObs" placeholder="Notas da movimentação (opcional)"></textarea>
+
+            <div class="svc-actions">
+              <button type="submit" class="btn btn-green">Salvar</button>
+              <button type="button" class="btn btn-ghost" data-close>Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ===== Modal: Confirmar exclusão ===== -->
+      <div id="prdModalDelete" class="modal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="prdModalDelTitle">
+          <button class="modal-close" data-close>&times;</button>
+          <h3 id="prdModalDelTitle">Excluir produto</h3>
+          <p>Tem certeza que deseja excluir <strong id="prdDelNome">este produto</strong>?</p>
+          <div class="svc-actions">
+            <button id="btnPrdConfirmDelete" class="btn btn-red">Excluir</button>
+            <button class="btn btn-ghost" data-close>Cancelar</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</body>
+</html>

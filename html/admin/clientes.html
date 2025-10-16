@@ -1,0 +1,152 @@
+<!-- CLIENTES -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin • Agenda — Barbearia Carreiro</title>
+
+  <link rel="stylesheet" href="../../css/admin.css?v=6" />
+
+  <link rel="manifest" href="/manifest.json">
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <script defer src="../../js/firebase-config.js"></script>
+
+  <script defer src="../../js/layout-loader.js"></script> 
+  <script defer src="../../js/clientes.js"></script>      
+</head>
+
+<body class="admin-body">
+  <div class="admin-shell">
+    <!-- SIDEBAR -->
+    <div id="sidebar-placeholder"></div>
+
+    <!-- MAIN -->
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <h1>Clientes</h1>
+      </header>
+
+      <!-- Barra de busca + utilitários -->
+      <section class="panel">
+        <div class="svc-utils">
+          <div class="search">
+            <label for="cliQ" style="margin:0">Busca:</label>
+            <input id="cliQ" type="text" placeholder="Nome, telefone, e-mail…" />
+          </div>
+          <div class="svc-util-btns">
+            <button id="cliExport" class="btn btn-blue">Exportar JSON</button>
+            <label class="btn btn-ghost">Importar JSON
+              <input id="cliImport" type="file" accept="application/json" hidden />
+            </label>
+            <button id="cliZerar" class="btn btn-red">Zerar tudo</button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="table" id="cliTable">
+            <thead>
+              <tr>
+                <th>Foto</th>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th class="hide-sm">E-mail</th>
+                <th class="hide-sm">Nascimento</th>
+                <th>Combos ativos</th>
+                <th style="width:160px">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="cliTbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- FAB (novo cliente) -->
+      <button id="btnFabAddCli" class="fab" title="Novo cliente" aria-label="Novo cliente">+</button>
+
+      <!-- MODAL: Novo/Editar Cliente -->
+      <div id="cliModal" class="modal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="cliTitle">
+          <button class="modal-close" data-close>&times;</button>
+          <h3 id="cliTitle">Novo cliente</h3>
+
+          <!-- [CRUD CLIENTES] -->
+          <form id="cliForm">
+            <input type="hidden" id="cliId" />
+
+            <div class="svc-row">
+              <div>
+                <label for="cNome">Nome *</label>
+                <input id="cNome" type="text" required />
+              </div>
+              <div>
+                <label for="cTel">Telefone *</label>
+                <input id="cTel" type="text" placeholder="(21) 9XXXX-XXXX" required />
+              </div>
+            </div>
+
+            <div class="svc-row">
+              <div>
+                <label for="cEmail">E-mail</label>
+                <input id="cEmail" type="email" placeholder="nome@dominio.com" />
+              </div>
+              <div>
+                <label for="cNasc">Nascimento</label>
+                <input id="cNasc" type="date" />
+              </div>
+            </div>
+
+            <!-- Upload de foto só aparece ao editar (novo não exige foto) -->
+            <div id="fotoBox" class="svc-photo" hidden>
+              <div class="svc-preview" id="fotoPreview">FOTO</div>
+              <div style="flex:1">
+                <label for="cFoto">Foto (PNG/JPG)</label>
+                <input id="cFoto" type="file" accept="image/*" />
+              </div>
+            </div>
+
+            <p class="muted" style="margin-top:8px">
+              Observação de segurança: senha não é exibida aqui. No backend/auth, marque <code>mustChangePassword=true</code> no primeiro acesso.
+            </p>
+
+            <div class="svc-actions">
+              <button type="submit" class="btn btn-green">Salvar</button>
+              <button type="button" class="btn btn-ghost" data-close>Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- MODAL: Confirmação de exclusão -->
+      <div id="cliDelModal" class="modal" aria-hidden="true">
+        <div class="modal-card">
+          <button class="modal-close" data-close>&times;</button>
+          <h3>Excluir cliente</h3>
+          <p>Tem certeza que deseja excluir este cliente?</p>
+          <div class="svc-actions">
+            <button id="cliConfirmDel" class="btn btn-red">Excluir</button>
+            <button class="btn btn-ghost" data-close>Cancelar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODAL: Histórico de agendamentos (somente leitura) -->
+      <div id="histModal" class="modal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="histTitle">
+          <button class="modal-close" data-close>&times;</button>
+          <h3 id="histTitle">Histórico de agendamentos</h3>
+          <div id="histList" class="table-wrap" style="margin-top:10px">
+            <!-- Renderizado via JS como tabela simples -->
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</body>
+</html>

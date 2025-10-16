@@ -1,0 +1,21 @@
+{
+  "name": "Barbearia Carreiro - Funcionário",
+  "short_name": "BC Funcionário",
+  "start_url": "/pages/funcionario/agenda.html",
+  "display": "standalone",
+  "background_color": "#111111",
+  "theme_color": "#e0b25b",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/assets/icones-logo/sr.carreiro(4).png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/assets/icones-logo/sr.carreiro(4).png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}

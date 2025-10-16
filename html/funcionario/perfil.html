@@ -1,0 +1,92 @@
+<!-- PERFIL DO FUNCIONARIO -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Funcionário | Minha Disponibilidade</title>
+    <link rel="stylesheet" href="../../css/admin.css?v=8" />
+    <style>
+        /* NOVOS ESTILOS PARA A NAVEGAÇÃO DOS DIAS */
+        .day-selector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .day-strip-container {
+            flex-grow: 1;
+            overflow: hidden; /* Esconde os dias que estão fora da área visível */
+        }
+        .day-strip {
+            transition: transform 0.3s ease-in-out; /* Adiciona uma animação suave de deslize */
+        }
+        .day-nav-btn {
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .day-nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+    </style>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script defer src="../../js/firebase-config.js"></script>
+    <script defer src="../../js/perfil-funcionario.js"></script>
+</head>
+<body class="admin-body">
+    <div class="admin-shell">
+        <aside class="admin-sidebar">
+            <div class="admin-brand"><img src="../../assets/icones-logo/sr.carreiro (4).png" alt="SR. CARREIRO"></div>
+
+            <div id="employeeName" class="employee-badge">Carregando...</div>
+            
+            <nav class="admin-nav">
+                <a class="nav-item" href="./agenda.html"><span class="dot"></span>Agenda</a>
+                <a class="nav-item" href="./caixa.html"><span class="dot"></span>Caixa</a>
+                <a class="nav-item" href="./perfil.html"><span class="dot"></span>Minha Disponibilidade</a>
+            </nav>
+        </aside>
+        
+        <main class="admin-main">
+            <header class="admin-topbar">
+                <h1>Configure sua Disponibilidade</h1>
+            </header>
+            
+            <section class="panel">
+                <p class="muted" style="margin:6px 0 10px">
+                    Clique nos horários para <strong>liberar</strong> (verde) ou <strong>bloquear</strong> (cinza). Navegue pelos dias usando as setas.
+                </p>
+                
+                <div id="dayMonth" class="day-month"></div>
+
+                <div class="day-selector">
+                    <button id="prevDaysBtn" class="day-nav-btn">&lt;</button>
+                    <div class="day-strip-container">
+                        <div id="dayStrip" class="day-strip"></div>
+                    </div>
+                    <button id="nextDaysBtn" class="day-nav-btn">&gt;</button>
+                </div>
+
+                <div id="weekMatrix" class="week-matrix" style="margin-top: 15px;"></div>
+                
+                <div class="modal-actions" style="justify-content: flex-end; display: flex; margin-top: 20px;">
+                    <button id="saveConfig" class="btn btn-green">Salvar Alterações</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script defer src="../../js/perfil-funcionario.js"></script>
+</body>
+</html>

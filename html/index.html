@@ -1,0 +1,93 @@
+<!-- INDEX -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barbearia Carreiro</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+
+  <!-- Firebase (v8 compatível) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+  <!-- Scripts personalizados -->
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="../js/login.js"></script>
+</head>
+<body>
+
+  <main class="main-wrap index">
+    <!-- Marca / Logo -->
+    <div class="brand">
+      <img src="../assets/icones-logo/sr.carreiro (4).png" alt="SR. CARREIRO">
+    </div>
+
+    <!-- Texto de introdução -->
+    <p class="login-intro">
+      Para agendar seu horário, faça o login, ou crie sua conta.
+    </p>
+
+    <!-- FORMULÁRIOS COM FUNDO -->
+  <div class="form-wrap">
+    <!-- Caixa de LOGIN -->
+    <div class="form-card" id="boxLogin">
+      <form id="formLogin">
+        <input type="email" id="loginEmail" class="input-field" placeholder="Digite seu email" required>
+        <input type="password" id="loginSenha" class="input-field" placeholder="Digite sua senha" required>
+
+        <!-- Botão EMAIL -->
+        <button type="submit" id="btnLogin" class="btn-cta">
+          <span class="icon">✉️</span>
+          ENTRAR COM O EMAIL
+        </button>
+
+        <!-- Botão GOOGLE -->
+        <button type="button" id="btnGoogle" class="btn-cta btn-google">
+          <img class="g-logo" src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+          ENTRAR COM O Google
+        </button>
+      </form>
+
+      <div class="login-links">
+        <a href="#" id="esqueciSenha">Esqueci minha senha</a>
+        <a href="#" id="mostrarCadastro">Criar conta</a>
+      </div>
+
+      <p id="loginErro"></p>
+    </div>
+
+    <!-- Caixa de CADASTRO (inicialmente escondida) -->
+    <div id="boxCadastro" style="display:none;">
+      <form id="formCadastro">
+        <input type="text" id="cadNome" class="input-field" placeholder="Nome completo" required>
+        <input type="tel" id="cadTelefone" class="input-field" placeholder="Telefone" required>
+        <input type="email" id="cadEmail" class="input-field" placeholder="Email" required>
+        <input type="password" id="cadSenha" class="input-field" placeholder="Senha" required>
+        <input type="date" id="cadNascimento" class="input-field" placeholder="Data de nascimento (opcional)">
+        <button type="button" id="btnCadastro" class="btn-cta">CADASTRAR</button>
+      </form>
+
+      <div class="login-links">
+        <a href="#" id="mostrarLogin">Já tenho conta</a>
+      </div>
+
+      <p id="cadastroErro"></p>
+    </div>
+  </div>
+
+     <!-- Rodapé -->
+  <footer>
+    <p>Rua Hercília 1160, Vila Emil - Mesquita/RJ</p>
+    <p>&copy; 2025 Barbearia Carreiro</p>
+  </footer>
+  </main>
+
+</body>
+</html>

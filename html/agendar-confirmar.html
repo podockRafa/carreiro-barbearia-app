@@ -1,0 +1,59 @@
+<!-- agendar-confirmar.html (Etapa 4 – revisão + observação + modal) -->
+
+
+<!DOCTYPE html><html lang="pt-BR"><head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Agendar – Confirmar</title>
+<link rel="stylesheet" href="../css/styles.css?v=8" />
+<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script> 
+<script defer src="../js/firebase-config.js"></script>
+<script defer src="/js/agendamento.js"></script>
+</head><body>
+<main class="main-wrap booking">
+  <!-- include:brand -->
+  <div class="brand"><img src="../assets/icones-logo/sr.carreiro (4).png" alt="SR. CARREIRO"></div>
+
+  <p class="home-greet">Olá, <span id="nomeCliente">(nome)</span>!</p>
+
+  <div class="confirm-card">
+    <div class="confirm-row"><div class="key">Serviço</div>     <div id="cf-service" class="val"></div></div>
+    <div class="confirm-row"><div class="key">Profissional</div><div id="cf-pro"     class="val"></div></div>
+    <div class="confirm-row"><div class="key">Data</div>        <div id="cf-date"   class="val"></div></div>
+    <div class="confirm-row"><div class="key">Horário</div>     <div id="cf-time"   class="val"></div></div>
+
+    <div style="margin-top:8px;">
+      <label><input type="checkbox" id="hasObs" /> Alguma observação?</label>
+      <textarea id="obs" class="input-field" style="margin-top:8px; text-transform:none; display:none;"
+        placeholder="Ex: Não precisa lavar, etc."></textarea>
+      <div class="tolerance">⏱ <strong>15 min de tolerância</strong> após o horário marcado.</div>
+    </div>
+  </div>
+
+  <div class="booking-nav">
+    <button id="goBack" class="btn-round" title="Voltar">&#8592;</button>
+    <button id="goNext" class="btn-round confirm" title="Confirmar">✔</button>
+  </div>
+
+  <!-- include:footer -->
+  <footer>Rua Hercília , 1160, Vila Emil - Mesquita/RJ<br>© Barbearia Carreiro</footer>
+</main>
+
+<!-- Modal de sucesso -->
+<div id="okModal" class="modal">
+  <div class="box">
+    <button class="close" title="Fechar">×</button>
+    <div class="ok">✅</div>
+    <h3 style="margin:6px 0 6px; font-size:22px;">Agendamento confirmado!</h3>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", ()=>{
+    const cb  = document.getElementById("hasObs");
+    const txt = document.getElementById("obs");
+    cb.addEventListener("change", ()=> txt.style.display = cb.checked? "block":"none");
+  });
+</script>
+</body></html>
