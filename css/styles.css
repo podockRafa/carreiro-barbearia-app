@@ -243,6 +243,13 @@ main.main-wrap.home{
   font-size:20px;
 }
 
+.btn-secondary {
+    background: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+    box-shadow: none;
+}
+
 /* =====================================================
    Quebras progressivas (comuns às páginas)
    ===================================================== */

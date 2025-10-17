@@ -1,16 +1,26 @@
 <!-- agendar-servico.html (Etapa 1 – serviço) -->
 
 
-<!DOCTYPE html><html lang="pt-BR"><head>
-<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Agendar – Serviço</title>
-<link rel="stylesheet" href="../css/styles.css?v=8" />
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agendar – Serviço</title>
+ 
+  <link rel="stylesheet" href="../css/styles.css?v=8" />
+  <link rel="manifest" href="/manifest-cliente.json">
 
-<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script> 
-<script defer src="../js/firebase-config.js"></script>
-<script defer src="/js/agendamento.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script> 
+  <script defer src="../js/firebase-config.js"></script>
+  <script defer src="/js/agendamento.js"></script>
+  <script>
+      if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+              navigator.serviceWorker.register('/sw-cliente.js');
+          });
+      }
+  </script>
 
 </head>
   <body>

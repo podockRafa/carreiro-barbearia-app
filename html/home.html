@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="../css/styles.css?v=4" />
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+  <link rel="manifest" href="/manifest-cliente.json">
+
 
   <!-- Firebase (v8 compatível) -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -20,6 +22,13 @@
   <!-- Config e JS da página -->
   <script defer src="../js/firebase-config.js"></script>
   <script defer src="../js/home.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw-cliente.js');
+        });
+    }
+  </script>
 </head>
 <body>
   <main class="main-wrap home">
@@ -46,6 +55,11 @@
     <button id="btnHistorico" class="btn-cta btn-primary">
         Histórico
     </button>
+
+    <button id="btnLogout" class="btn-cta btn-secondary">
+        Sair
+    </button>
+</div>
     </div>
 
     <!-- Endereço -->

@@ -1,9 +1,9 @@
 {
-  "name": "Barbearia Carreiro - Funcionário",
-  "short_name": "BC Funcionário",
-  "start_url": "/pages/funcionario/agenda.html",
+  "name": "Barbearia Sr. Carreiro",
+  "short_name": "Sr. Carreiro",
+  "start_url": "/html/index.html",
   "display": "standalone",
-  "background_color": "#111111",
+  "background_color": "#000000",
   "theme_color": "#e0b25b",
   "orientation": "portrait-primary",
   "icons": [

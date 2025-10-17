@@ -8,7 +8,7 @@ Este é um sistema web completo para gestão e agendamento em barbearias, desenv
 
 A aplicação atende a três perfis de usuários distintos: **Clientes**, **Funcionários** e **Administradores**, cada um com seu próprio painel e funcionalidades específicas para suas necessidades.
 
-**➡️ [Clique aqui para ver o projeto ao vivo](https://barbearia-srcarreiro.web.app)**
+**➡️ [Clique aqui para ver o projeto ao vivo](https://barbearia-srcarreiro.web.app/html/index.html)**
 
 ---
 

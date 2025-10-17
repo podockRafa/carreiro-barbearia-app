@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="../css/styles.css?v=7" />
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+  <link rel="manifest" href="/manifest-cliente.json">
+
 
   <!-- Firebase (v8 compatível) -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -20,6 +22,13 @@
   <!-- Config + JS da página -->
   <script defer src="../js/firebase-config.js"></script>
   <script defer src="../js/historico.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw-cliente.js');
+        });
+    }
+  </script>
 </head>
 <body>
   <main class="main-wrap history">
